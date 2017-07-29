@@ -2,7 +2,6 @@ package server
 
 import (
 	"net"
-	"github.com/ingojaeckel/go-udp/common"
 	"fmt"
 	"time"
 )
@@ -10,13 +9,8 @@ import (
 var timeBetweenServerMessages = 1000 * time.Millisecond
 
 func New() {
-	/* Lets prepare a address at any address at port 10001*/
-	ServerAddr,err := net.ResolveUDPAddr("udp",":10001")
-	common.CheckError(err)
-
-	/* Now listen at selected port */
-	ServerConn, err := net.ListenUDP("udp", ServerAddr)
-	common.CheckError(err)
+	ServerAddr, _ := net.ResolveUDPAddr("udp",":10001")
+	ServerConn, _ := net.ListenUDP("udp", ServerAddr)
 	defer ServerConn.Close()
 
 	for {
