@@ -6,7 +6,7 @@ import (
 )
 
 func New(clientName string, initialMessage []byte) {
-	ServerAddr, _ := net.ResolveUDPAddr("udp","127.0.0.1:10001")
+	ServerAddr, _ := net.ResolveUDPAddr("udp", "127.0.0.1:10001")
 	LocalAddr, _ := net.ResolveUDPAddr("udp", "127.0.0.1:0")
 	Conn, _ := net.DialUDP("udp", LocalAddr, ServerAddr)
 

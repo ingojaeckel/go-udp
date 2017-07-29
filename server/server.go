@@ -1,15 +1,15 @@
 package server
 
 import (
-	"net"
 	"fmt"
+	"net"
 	"time"
 )
 
 var timeBetweenServerMessages = 1000 * time.Millisecond
 
 func New() {
-	ServerAddr, _ := net.ResolveUDPAddr("udp",":10001")
+	ServerAddr, _ := net.ResolveUDPAddr("udp", ":10001")
 	ServerConn, _ := net.ListenUDP("udp", ServerAddr)
 	defer ServerConn.Close()
 
@@ -27,7 +27,7 @@ func handleNewClient(buf []byte, n int, addr *net.UDPAddr, srvConn *net.UDPConn)
 
 	// Create a copy of the bytes originally received by the client.
 	packet := make([]byte, n+1)
-	for i:=0; i<n; i++ {
+	for i := 0; i < n; i++ {
 		packet[i] = buf[i]
 	}
 	// This will initialize the sequence number with 1.
