@@ -23,7 +23,7 @@ func New() {
 }
 
 func handleNewClient(buf []byte, n int, addr *net.UDPAddr, srvConn *net.UDPConn) {
-	fmt.Printf("[srv] Handling new connection. Received %d bytes from client:%v; addr:%v\n", n, buf[:n], addr)
+	fmt.Printf("[_SRV_] New connection. Received %d bytes from client:%v; addr:%v\n", n, buf[:n], addr)
 
 	// Create a copy of the bytes originally received by the client.
 	packet := make([]byte, n+1)

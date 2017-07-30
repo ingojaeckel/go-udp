@@ -14,9 +14,22 @@ func New(clientName string, initialMessage []byte) {
 
 	Conn.Write(initialMessage)
 
+	lastSequenceNumber := 0
+	packetsReceived := 0
+	packetsLost := 0
+
 	for {
 		readBuf := make([]byte, 10)
 		numberOfBytesRead, _ := Conn.Read(readBuf)
-		fmt.Printf("[%s] Received %d bytes: %v\n", clientName, numberOfBytesRead, readBuf[:numberOfBytesRead])
+
+		if numberOfBytesRead > 0 {
+			newSequenceNumber := int(readBuf[numberOfBytesRead - 1])
+
+			numberOfPacketsSkipped := newSequenceNumber - lastSequenceNumber - 1
+			packetsLost = packetsLost + numberOfPacketsSkipped
+			lastSequenceNumber = newSequenceNumber
+			packetsReceived = packetsReceived + 1
+		}
+		fmt.Printf("[%5s] rcvd:%2v [pkts.rcvd:%2d,lost:%2d]\n", clientName, readBuf[:numberOfBytesRead], packetsReceived, packetsLost)
 	}
 }
