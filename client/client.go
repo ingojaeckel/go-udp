@@ -5,9 +5,9 @@ import (
 	"net"
 )
 
-func New(clientName string, initialMessage []byte) {
-	ServerAddr, _ := net.ResolveUDPAddr("udp", "127.0.0.1:10001")
-	LocalAddr, _ := net.ResolveUDPAddr("udp", "127.0.0.1:0")
+func New(clientName string, initialMessage []byte, serverIp string, serverPort int, clientIp string) {
+	ServerAddr, _ := net.ResolveUDPAddr("udp", fmt.Sprintf("%s:%d", serverIp, serverPort))
+	LocalAddr, _ := net.ResolveUDPAddr("udp", fmt.Sprintf("%s:0", clientIp))
 	Conn, _ := net.DialUDP("udp", LocalAddr, ServerAddr)
 
 	defer Conn.Close()
